@@ -40,9 +40,8 @@ bool mMsgQ::recvMsg(char *buf) {
       printf("error = %d[%s]\n", errno, strerror(errno));
       return false;
    }
-   printf("ret = %d\nmsg.msgInfo = %s\n", ret, msg.msgInfo);
    strcpy(buf, msg.msgInfo);
-   printf("buf = %s\nmsgInfo = %s\n", buf, msg.msgInfo);
+   printf("buf = %s\n", buf);
    return true;
 }
 
