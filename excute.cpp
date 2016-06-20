@@ -24,7 +24,10 @@ JNIEXPORT jstring JNICALL Java_excute_readMsgFromMsgQ(JNIEnv *env, jobject, jint
    char buff[2048];
    mMsgQ mq(msgQKey);
    if (mq.getMsgQ()) {
-      mq.recvMsg(buff);
+      printf("begin recvMsg\n");
+      bool ret = mq.recvMsg((char *)buff);
+      printf("ret = %d\nbuff = %s\n", ret, buff);
+      printf("recvMsg buff = %s\n", buff);
    } else {
       printf("msq is empty. It's time to sleep\n");
    }

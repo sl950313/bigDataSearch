@@ -35,8 +35,14 @@ bool mMsgQ::recvMsg(char *buf) {
    }
 
    msgStru msg;
-   msgrcv(msgId, &msg, sizeof(msgStru), 0, 0);
+   int ret = msgrcv(msgId, &msg, sizeof(msgStru), 0, 0);
+   if (ret == -1) {
+      printf("error = %d[%s]\n", errno, strerror(errno));
+      return false;
+   }
+   printf("ret = %d\nmsg.msgInfo = %s\n", ret, msg.msgInfo);
    strcpy(buf, msg.msgInfo);
+   printf("buf = %s\nmsgInfo = %s\n", buf, msg.msgInfo);
    return true;
 }
 

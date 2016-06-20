@@ -23,6 +23,7 @@
 #include <set>
 #include <sstream>
 
+#include <errno.h>
 #include <cstdio>
 #include <ctime>
 #include <stdlib.h>
@@ -159,7 +160,11 @@ public:
            strcpy(msg.msgInfo, tmp);
            strcat(msg.msgInfo, sql);
            printf("msg.msgInfo = %s\n", msg.msgInfo);
-           msgQ->sendMsg(&msg);
+           int ret = msgQ->sendMsg(&msg);
+           if (!ret) {
+              printf("msgsnd error[%d][%s]\n", errno, strerror(errno));
+              return ;
+           }
 
            //signal(SIGUSR1, mshm->DataFromShm(uuid));
            //semaphore sem(mask);
