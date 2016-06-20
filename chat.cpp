@@ -72,6 +72,7 @@ public:
        */ 
       mshm = new mShm(shmKEY, 2048 * 2048); 
       msgQ = new mMsgQ(msgQKEY);
+      msgQ->createMsgQ();
    }
    ~search() {
       delete mshm;

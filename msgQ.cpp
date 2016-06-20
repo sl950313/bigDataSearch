@@ -6,7 +6,6 @@
 
 mMsgQ::mMsgQ(int _msgKey) {
    msgKey = _msgKey;
-   createMsgQ();
 }
 
 bool mMsgQ::createMsgQ() {
@@ -19,16 +18,22 @@ bool mMsgQ::createMsgQ() {
    return true;
 }
 
-int mMsgQ::getMsgQ() {
-   return 0;
-}
-
-bool mMsgQ::recvMsg(char *buf) {
+bool mMsgQ::getMsgQ() {
    int msgId = msgget(msgKey, IPC_EXCL);
    if (!msgId) {
       printf("msq not exist\n");
       return false;
    }
+   this->msgId = msgId;
+   return true;
+}
+
+bool mMsgQ::recvMsg(char *buf) {
+   if (!getMsgQ()) {
+      printf("msq not exist\n");
+      return false; 
+   }
+
    msgStru msg;
    msgrcv(msgId, &msg, sizeof(msgStru), 0, 0);
    strcpy(buf, msg.msgInfo);

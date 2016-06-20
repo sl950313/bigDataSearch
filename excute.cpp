@@ -7,7 +7,7 @@
 #include <sys/types.h>
 #include <signal.h>
 
-const int msgQKey = 150503;
+//const int msgQKey = 150503;
 const int mshKey = 950313;
 
 jstring stoJstring(JNIEnv* env, const char* pat) {
@@ -23,7 +23,11 @@ JNIEXPORT jstring JNICALL Java_excute_readMsgFromMsgQ(JNIEnv *env, jobject, jint
    printf("in debug:\tin Java_excute_readMsgFromMsgQ\n");
    char buff[2048];
    mMsgQ mq(msgQKey);
-   mq.recvMsg(buff);
+   if (mq.getMsgQ()) {
+      mq.recvMsg(buff);
+   } else {
+      printf("msq is empty. It's time to sleep\n");
+   }
    jstring result = stoJstring(env, (const char*)buff);
    return result;
 }

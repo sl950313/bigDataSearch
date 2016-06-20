@@ -13,12 +13,12 @@ class mMsgQ {
 private:
    key_t msgKey;
    int msgId;
-   bool createMsgQ();
    bool delMsgQ();
 public:
    mMsgQ(int _msgKey);
    ~mMsgQ();
-   int getMsgQ();
+   bool getMsgQ();
+   bool createMsgQ();
    bool sendMsg(msgStru *msg);
    bool recvMsg(char *buf);
 };
