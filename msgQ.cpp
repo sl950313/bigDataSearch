@@ -35,7 +35,7 @@ bool mMsgQ::recvMsg(char *buf) {
    }
 
    msgStru msg;
-   int ret = msgrcv(msgId, &msg, sizeof(msgStru), 0, 0);
+   int ret = msgrcv(msgId, &msg, sizeof(((msgStru *)0)->msgInfo), 0, 0);
    if (ret == -1) {
       printf("error = %d[%s]\n", errno, strerror(errno));
       return false;
@@ -49,7 +49,7 @@ bool mMsgQ::sendMsg(msgStru *msg) {
    msgStru msgTmp;
    msgTmp.msgtype = msg->msgtype;
    strcpy(msgTmp.msgInfo, msg->msgInfo);
-   int ret = msgsnd(msgId, msg, sizeof(msgStru), IPC_NOWAIT);
+   int ret = msgsnd(msgId, msg, sizeof(((msgStru *)0)->msgInfo), IPC_NOWAIT);
    if (ret < 0) { 
       printf("msgsnd() error\n");
       return false;
